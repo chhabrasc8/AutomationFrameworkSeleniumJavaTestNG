@@ -45,12 +45,11 @@ public class WebDriverFactory {
 			
 		case "edge":
 
-			WebDriverManager.edgedriver().setup();
+			System.setProperty("webdriver.edge.driver","C:\\DRIVER\\edgedriver_win64\\msedgedriver.exe");
 
 			EdgeOptions edgeOptions = new EdgeOptions();
 
-			edgeOptions.addArguments(
-			        "--headless=new");
+			edgeOptions.addArguments("--headless=new");
 
 			driver =new EdgeDriver(edgeOptions);
 
