@@ -9,10 +9,10 @@ public class ConfigReader {
 	static Properties proprty = new Properties();
 	
 	public static void readpropfile() throws IOException {
-		
-		FileReader reader = new FileReader("C:\\Users\\chhab\\eclipse-workspaceshammi\\AutomationFramwork\\src\\test\\resources\\config.properties");
-		proprty.load(reader);
-	
+
+	    FileReader reader = new FileReader(System.getProperty("user.dir") + "/src/test/resources/config.properties");
+
+	    proprty.load(reader);
 	}
 	
      public static String getURL() 
