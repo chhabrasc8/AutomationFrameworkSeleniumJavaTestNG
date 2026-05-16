@@ -5,8 +5,7 @@ import java.lang.reflect.Method;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -21,36 +20,28 @@ public class BaseTest {
     public WebDriver driver;
     public ExtentTest test;
 
+    @BeforeSuite
+    public void startReport() {
+
+        ExtentReportUtil.setupreport();
+    }
+
+
     @BeforeMethod
     public void setup(Method method)
             throws IOException {
 
         ConfigReader.readpropfile();
 
-        System.out.println(
-                "Browser = "
-                + ConfigReader.getBrowser());
-
-        System.out.println(
-                "URL = "
-                + ConfigReader.getURL());
-
         driver =
-                WebDriverFactory.initDriver(
-                        ConfigReader.getBrowser());
+          WebDriverFactory.initDriver(
+             ConfigReader.getBrowser());
 
-        System.out.println(
-                "Driver = "
-                + driver);
-
-        driver.get(
-                ConfigReader.getURL());
-
-        ExtentReportUtil.setupreport();
+        driver.get(ConfigReader.getURL());
 
         test =
-                ExtentReportUtil.starttest(
-                        method.getName());
+         ExtentReportUtil.starttest(
+             method.getName());
     }
 
 
@@ -60,34 +51,33 @@ public class BaseTest {
             throws IOException {
 
         if(result.getStatus()
-                == ITestResult.FAILURE)
-        {
-            test.log(
-                    Status.FAIL,
-                    "Test Failed");
-
-            if(driver != null)
-            {
-                ScreenshotUtil
-                    .getScreenshot(
-                            driver,
-                            result.getName());
-            }
-        }
-
-        if(result.getStatus()
                 == ITestResult.SUCCESS)
         {
-            test.log(
-                    Status.PASS,
+            test.log(Status.PASS,
                     "Test Passed");
         }
 
-        ExtentReportUtil.flushReport();
+        if(result.getStatus()
+                == ITestResult.FAILURE)
+        {
+            test.log(Status.FAIL,
+                    "Test Failed");
 
-        if(driver != null)
+            ScreenshotUtil.getScreenshot(
+                    driver,
+                    result.getName());
+        }
+
+        if(driver!=null)
         {
             driver.quit();
         }
+    }
+
+
+    @AfterSuite
+    public void closeReport()
+    {
+        ExtentReportUtil.flushReport();
     }
 }
