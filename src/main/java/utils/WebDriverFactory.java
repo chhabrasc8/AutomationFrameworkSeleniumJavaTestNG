@@ -45,16 +45,23 @@ public class WebDriverFactory {
 			
 		case "edge":
 
-			System.setProperty("webdriver.edge.driver","C:\\DRIVER\\edgedriver_win64\\msedgedriver.exe");
+			System.setProperty(
+			"webdriver.edge.driver",
+			"C:\\DRIVER\\edgedriver_win64\\msedgedriver.exe");
 
-			EdgeOptions edgeOptions = new EdgeOptions();
+			EdgeOptions edgeOptions =
+			        new EdgeOptions();
 
 			edgeOptions.addArguments("--headless=new");
+			edgeOptions.addArguments("--disable-gpu");
+			edgeOptions.addArguments("--no-sandbox");
+			edgeOptions.addArguments("--remote-allow-origins=*");
+			edgeOptions.addArguments("--disable-dev-shm-usage");
 
-			driver =new EdgeDriver(edgeOptions);
+			driver =
+			      new EdgeDriver(edgeOptions);
 
 			break;
-		
 		}
 		
 		
