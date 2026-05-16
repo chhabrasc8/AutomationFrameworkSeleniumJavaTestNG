@@ -20,8 +20,18 @@ public class ConfigReader {
 		return proprty.getProperty("url");
     	 
     	 }
+     //below code is for taking browser from jenkin permetraized
      public static String getBrowser()
      {
-    	 return proprty.getProperty("browser");
+         String browser =
+                 System.getProperty("browser");
+
+         if(browser == null)
+         {
+             browser =
+             proprty.getProperty("browser");
+         }
+
+         return browser;
      }
 }
