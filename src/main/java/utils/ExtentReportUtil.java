@@ -1,37 +1,40 @@
 package utils;
 
-import com.aventstack.extentreports.*;
-import com.aventstack.extentreports.reporter
-        .ExtentSparkReporter;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 public class ExtentReportUtil {
 
-    static ExtentReports report;
-    static ExtentSparkReporter reporter;
+    private static ExtentReports report;
+    private static ExtentSparkReporter reporter;
 
-    public static void setupreport()
-    {
-        if(report == null)   // IMPORTANT
+    public static ExtentReports getReport() {
+
+        if(report == null)
         {
             reporter =
-             new ExtentSparkReporter(
-             System.getProperty("user.dir")
-             + "/Reports/Report.html");
+              new ExtentSparkReporter(
+                System.getProperty("user.dir")
+                + "/Reports/Report.html");
 
-            report =
-             new ExtentReports();
+            report = new ExtentReports();
 
-            report.attachReporter(
-                    reporter);
+            report.attachReporter(reporter);
+
+            report.setSystemInfo(
+                "Tester", "Chhagan");
         }
+
+        return report;
     }
 
 
-    public static ExtentTest
-      starttest(String testname)
+    public static ExtentTest starttest(
+            String testname)
     {
-        return report.createTest(
-                testname);
+        return getReport()
+               .createTest(testname);
     }
 
 
