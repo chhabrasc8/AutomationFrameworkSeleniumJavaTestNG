@@ -1,6 +1,7 @@
 package tests;
 
 import org.testng.Assert;
+//auto build test
 import org.testng.annotations.Test;
 
 import base.BaseTest;
